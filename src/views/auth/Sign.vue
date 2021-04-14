@@ -26,6 +26,7 @@
 
 <script>
 import { ref } from 'vue'
+const { httpClient } = require('../../core/application/outside/http_client_config')
 export default {
     name:"Login",
     setup() {
@@ -45,7 +46,8 @@ export default {
             let selectValue = selectBox.options[selectBox.selectedIndex].value
             user.value.user_type = selectValue
             console.log(user.value)
-            //save user at database
+            const respose = await httpClient.post('/users/create', user.value)
+            console.log(respose.data)
             
         }
     

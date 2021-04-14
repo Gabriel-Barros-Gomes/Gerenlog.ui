@@ -23,6 +23,8 @@
 
 <script>
 import { ref } from 'vue'
+import router from '../../router'
+const { httpClient } = require('../../core/application/outside/http_client_config')
 export default {
     name:"Login",
     setup() {
@@ -39,7 +41,14 @@ export default {
             let selectValue = selectBox.options[selectBox.selectedIndex].value
             user.value.user_type = selectValue
             console.log(user.value)
-            //save user at database
+            try{
+                const response = await httpClient.post('/auth/login', user.value)
+                console.log(response.data)
+                localStorage.setItem('token', response.data.token)
+                router.push({name: 'Home'})
+            }catch(e){
+                console.error(e)
+            }
         }
     
         return { 
