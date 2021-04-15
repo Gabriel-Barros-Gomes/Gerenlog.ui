@@ -97,6 +97,7 @@ export default {
                 router.push({path: '/auth/login'})
             }catch(e){
                 console.error(e)
+                alert('not created')
             }
             
         }

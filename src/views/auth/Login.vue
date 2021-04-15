@@ -41,6 +41,12 @@
                     <input class="button is-link is-light is-rounded " @click="onLogin()" name="btn_entrar" id="btn-entrar" type="button" value="Entrar">
                   </div>
               </div>
+
+              <div class="field">
+                    <div>
+                        <router-link to="/auth/sign">Clique aqui para criar um novo Usuário</router-link>
+                    </div>
+              </div>
           </form>
       </div>
   </div>
@@ -73,6 +79,7 @@ export default {
                 router.push({name: 'Home'})
             }catch(e){
                 console.error(e)
+                alert('Usuario ou Senha não batem')
             }
         }
     
