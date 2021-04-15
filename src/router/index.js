@@ -27,10 +27,6 @@ const routes = [
     component: Sign
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-  },
-  {
     path: '/dashboard/warehouse',
     name: 'Warehouse',
   }

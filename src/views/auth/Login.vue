@@ -3,9 +3,8 @@
       <div id="form-login" class="column is-half is-offset-one-quarter " style="text-align:center; padding-top:1.5rem" >
           <label class="title" >Entrar</label>
           <form>
-
               <div class="field">
-              <label class="label">Cadastro Pessoa Física (CPF) </label>
+              <label class="label">Cadastro de Pessoa Física (CPF) </label>
               <div class="control">
                   <input class="input is-success is-rounded" name="cpf" id="cpf" type="text" placeholder="CPF" v-model="user.cpf">
               </div>
