@@ -1,12 +1,17 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/auth/login">Login</router-link> |
-      <router-link to="/auth/sign">Sign</router-link> |
-      <input @click="logout()" type="button" value="Sair">
-    </div>
+    <nav id="nav" class="navbar" role="navigation" aria-label="main navigation" style="padding-top:2rem; padding-right:1rem; padding-left:1rem">
+      <div class="navbar-start buttons">
+      <a class="button is-dark" href=""><img src="logo.png"></a>
+      <router-link class="button is-dark" to="/">Dashboard</router-link>
+      <router-link class="button is-info" to="/about">Sobre</router-link>
+      </div>
+      <div class="navbar-end buttons">
+      <router-link class="button is-primary" to="/auth/login">Entrar</router-link>
+      <router-link class="button is-warning" to="/auth/sign">Cadastrar</router-link>
+      <input @click="logout()" class="button is-danger" type="button" value="Sair">
+      </div>
+    </nav>
     <div id="canvas">
     <router-view/>
     </div>
@@ -20,6 +25,7 @@ export default {
     const logout = async() => {
       localStorage.clear('token')
       router.push({name: "Login"})
+      console.log('logout')
     }
 
     return {
