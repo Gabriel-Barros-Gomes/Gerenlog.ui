@@ -26,6 +26,7 @@
 
 <script>
 import { ref } from 'vue'
+import router from '../../router'
 const { httpClient } = require('../../core/application/outside/http_client_config')
 export default {
     name:"Login",
@@ -46,8 +47,14 @@ export default {
             let selectValue = selectBox.options[selectBox.selectedIndex].value
             user.value.user_type = selectValue
             console.log(user.value)
-            const respose = await httpClient.post('/users/create', user.value)
-            console.log(respose.data)
+            try{
+                const respose = await httpClient.post('/users/create', user.value)
+                console.log(respose.data)
+                alert('Created success')
+                router.push({path: '/auth/login'})
+            }catch(e){
+                console.error(e)
+            }
             
         }
     
