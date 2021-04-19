@@ -3,7 +3,7 @@
     <nav id="nav" class="navbar" role="navigation" aria-label="main navigation" style="padding-top:2rem; padding-right:1rem; padding-left:1rem">
       <div class="navbar-start buttons">
       <a class="button is-dark" href=""><img src="logo.png"></a>
-      <router-link class="button is-dark" to="/">Dashboard</router-link>
+      <router-link class="button is-dark" to="/">Inicio</router-link>
       <router-link class="button is-info" to="/about">Sobre</router-link>
       </div>
       <div class="navbar-end buttons">
