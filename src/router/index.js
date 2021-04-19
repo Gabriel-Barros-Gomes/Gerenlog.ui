@@ -5,6 +5,8 @@ import About from '../views/About.vue'
 import Login from '../views/auth/Login.vue'
 import Sign from '../views/auth/Sign.vue'
 
+import Warehouse from '../views/dashboard/services/Warehouse.vue'
+
 const routes = [
   {
     path: '/',
@@ -29,6 +31,7 @@ const routes = [
   {
     path: '/dashboard/warehouse',
     name: 'Warehouse',
+    component: Warehouse
   }
 ]
 
