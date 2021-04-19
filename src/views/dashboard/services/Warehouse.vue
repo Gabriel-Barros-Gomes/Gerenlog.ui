@@ -5,7 +5,7 @@
 
             <li>
             <div class="card" >
-              <div class="card-content">
+              <div class="card-content" >
                 <label class="title">Produto {{i + 1}}</label><br>
                 <label class="subtitle">Id</label> <label class="label">{{index.id}}</label>
                 <label class="subtitle">Nome</label> <label class="label">{{index.name}}</label>
@@ -15,7 +15,7 @@
                 <label class="subtitle">Tipo</label> <label class="label">{{index.type}}</label>
                 <label class="subtitle">Categoria</label> <label class="label">{{index.category}}</label>
                 <div class="buttons">
-                  <input class="button is-danger" type="button" value="Excluir">
+                  <input class="button is-danger" type="button" value="Excluir" @click.prevent="onDelete(index.id)">
                   <input class="button is-warning" type="button" value="Editar">
                 </div>
               </div>
@@ -31,21 +31,21 @@
           <div class="field">
             <label class="label">Nome do Produto</label>
               <div class="control">
-                <input class="input is-rounded is-success" type="text" placeholder="Nome">
+                <input class="input is-rounded is-success" type="text" placeholder="Nome" v-model="product.name">
               </div>
           </div>
 
           <div class="field">
             <label class="label">Quantidade</label>
               <div class="control">
-                <input class="input is-rounded" type="number" placeholder="Quantidade">
+                <input class="input is-rounded" type="number" placeholder="Quantidade" v-model="product.quantity">
               </div>
           </div>
 
           <div class="field">
             <label class="label">Código do Produto</label>
               <div class="control">
-                <input class="input is-rounded" type="text" placeholder="Código">
+                <input class="input is-rounded" type="text" placeholder="Código" v-model="product.product_code">
               </div>
           </div>
           
@@ -59,10 +59,12 @@
           <div class="field">
             <label class="label">Tipo</label>
               <div class="control">
-                <select class="select">
+                <select class="select" v-model="product.type">
                   <option value="">Selecione um Tipo</option>
-                  <option value=""></option>
-                  <option value=""></option>
+                  <option value="Liquido">Líquido</option>
+                  <option value="Solido">Sólido</option>
+                  <option value="Pasta">Pasta</option>
+                  <option value="Gel">Gel</option>
                 </select>
               </div>
           </div>
@@ -70,16 +72,19 @@
           <div class="field">
             <label class="label">Categoria</label>
               <div class="control">
-                <select class="select">
+                <select class="select" v-model="product.category">
                   <option value="">Selecione uma Categoria</option>
-                  <option value=""></option>
-                  <option value=""></option>
+                  <option value="Limpeza">Limpeza</option>
+                  <option value="Equipamento">Equipamento</option>
+                  <option value="EPI">EPI</option>
+                  <option value="Patrimonio">Patrimônio</option>
+                  <option value="Outros">Outros</option>
                 </select>
               </div>
           </div>
 
           <div class="buttons">
-            <input class="button is-link is-light is-rounded" type="button" value="Criar">
+            <input class="button is-link is-light is-rounded" type="button" value="Criar" @click.prevent="onSave">
           </div>
 
         </div>
@@ -118,13 +123,38 @@ export default {
       }
     }
 
+    const onSave = async () => {
+      try {
+        console.log(product.value)
+        const response = await httpClient.post('/products/create', product.value, {
+          headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
+        })
+        console.log(response.data)
+      } catch (e) {
+        console.error(e)
+      }
+    }
+
+    const onDelete = async ( _id ) => {
+      try{
+        const response = await httpClient.delete(`/products/deletebyid/${ _id }`, {
+          headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
+        })
+        console.log(response.data)
+      }catch(e){
+        console.error(e)
+      }
+    }
+
     onMounted(async ()=>{
       await loadProducts()
     })
 
     return {
       product,
-      products
+      products,
+      onSave,
+      onDelete
     }
   },
   created() {
