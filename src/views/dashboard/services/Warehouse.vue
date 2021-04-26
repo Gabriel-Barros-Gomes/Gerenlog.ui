@@ -6,17 +6,19 @@
             <li>
             <div class="card" >
               <div class="card-content" >
-                <label class="title">Produto {{i + 1}}</label><br>
+                <label class="title">{{index.name}}</label><br>
                 <label class="subtitle">Id</label> <label class="label">{{index.id}}</label>
                 <label class="subtitle">Nome</label> <label class="label">{{index.name}}</label>
-                <label class="subtitle">Quantidade</label> <label class="label">{{index.quantity}}</label>
+                <label class="subtitle">Quantidade</label> <label class="label">{{index.quantity}} </label>
                 <label class="subtitle">Código do Produto</label> <label class="label">{{index.product_code}}</label>
                 <label class="subtitle">Descrição</label> <label class="label">{{index.description}}</label>
                 <label class="subtitle">Tipo</label> <label class="label">{{index.type}}</label>
                 <label class="subtitle">Categoria</label> <label class="label">{{index.category}}</label>
+                <label class="subtitle">Unidade de Medida</label> <label class="label">{{index.unit_measurement}}</label>
+                <label class="subtitle">Data de Validade</label> <label class="label">{{index.expiration_date}}</label>
                 <div class="buttons">
                   <input class="button is-danger" type="button" value="Excluir" @click.prevent="onDelete(index.id)">
-                  <input class="button is-warning" type="button" value="Editar">
+                  <input class="button is-warning" type="button" value="Editar" @click.prevent="onEdit(index.id)">
                 </div>
               </div>
             </div>
@@ -26,7 +28,8 @@
         </div>
 
         <div id="products-register-form" class="column" style="padding-left:2rem; padding-right:3rem">
-           <label class="title" >Cadastre um Novo Produto</label>
+           <label v-if="product.edited === false" class="title" >Cadastre um Novo Produto</label>
+           <label v-else class="title" >Editar um Produto</label>
 
           <div class="field">
             <label class="label">Nome do Produto</label>
@@ -83,10 +86,38 @@
               </div>
           </div>
 
-          <div class="buttons">
-            <input class="button is-link is-light is-rounded" type="button" value="Criar" @click.prevent="onSave">
+           <div class="field">
+            <label class="label">Unidade de Medida</label>
+              <div class="control">
+                <select class="select" v-model="product.unit_measurement">
+                  <option value="">Selecione uma Unidade de Medida</option>
+                  <option value="Unidade">Unidade</option>
+                  <option value="Litro">Litro</option>
+                  <option value="Caixa">Caixa</option>
+                  <option value="Bomba">Bomba (5 Litros)</option>
+                  <option value="Pacote">Pacote</option>
+                  <option value="Fardo">Fardo</option>
+                </select>
+              </div>
           </div>
 
+          
+          <div class="field">
+            <label class="label">Data de Validade</label>
+              <div class="control">
+                <input class="input is-rounded" pattern="dd/MM/yyyy" type="date" placeholder="Data de Validade" v-model="product.expiration_date">
+              </div>
+          </div>
+
+          <div class="buttons">
+            <input v-if="product.edited === false" class="button is-link is-light is-rounded" type="button" value="Criar" @click.prevent="onSave">
+            <input v-else class="button is-link is-light is-rounded" type="button" value="Editar" @click.prevent="onSave">
+          </div>
+
+          
+
+
+          
         </div>
     </div>
 </template>
@@ -106,8 +137,15 @@ export default {
       description:"",
       type:"",
       category:"",
-      active:true
+      unit_measurement:"",
+      expiration_date:"",
+      active:true,
+      edited:false
     })
+
+    const formatDate = (str) => {
+      return str.split('-').reverse().join('-');
+    }
 
     const loadProducts = async () => {
       try{
@@ -117,7 +155,6 @@ export default {
         products.value = response.data
         console.log(products.value)
       }catch(e){
-
         router.push({name:'Login'})
         console.error(e)
       }
@@ -125,11 +162,20 @@ export default {
 
     const onSave = async () => {
       try {
-        console.log(product.value)
-        const response = await httpClient.post('/products/create', product.value, {
-          headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
-        })
-        console.log(response.data)
+        if(product.value.edited === false){
+          console.log(product.value)
+          const response = await httpClient.post('/products/create', product.value, {
+            headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
+          })
+          console.log(response.data)
+        }else{
+          let product_id = localStorage.getItem('product_id')
+          const response = await httpClient.put(`/products/updatebyid/${product_id}`, product.value, {
+             headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
+          })
+          console.log(response.data)
+          console.log('edited')
+        }
       } catch (e) {
         console.error(e)
       }
@@ -146,6 +192,22 @@ export default {
       }
     }
 
+    const onEdit = async ( _id ) => {
+      try{
+        const response = await httpClient.get(`/products/findbyid/${ _id }`, {
+          headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
+        })
+        console.log(response.data)
+        product.value = response.data
+        product.value.edited = true
+        product.value.expiration_date = formatDate(response.data.expiration_date)
+        console.log(product.value.expiration_date)
+        localStorage.setItem('product_id', response.data.id)
+      }catch(e){
+        console.error(e)
+      }
+    }
+
     onMounted(async ()=>{
       await loadProducts()
     })
@@ -154,7 +216,8 @@ export default {
       product,
       products,
       onSave,
-      onDelete
+      onDelete,
+      onEdit
     }
   },
   created() {
