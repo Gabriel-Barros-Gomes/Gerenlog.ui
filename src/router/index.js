@@ -5,7 +5,7 @@ import About from '../views/About.vue'
 import Login from '../views/auth/Login.vue'
 import Sign from '../views/auth/Sign.vue'
 
-import Warehouse from '../views/dashboard/services/Warehouse.vue'
+import registerProducts from '../views/dashboard/registers/Products.vue'
 
 const routes = [
   {
@@ -29,9 +29,9 @@ const routes = [
     component: Sign
   },
   {
-    path: '/dashboard/warehouse',
-    name: 'Warehouse',
-    component: Warehouse
+    path: '/dashboard/register-products',
+    name: 'Register_Products',
+    component: registerProducts
   }
 ]
 
