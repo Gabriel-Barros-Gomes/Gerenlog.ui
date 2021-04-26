@@ -115,7 +115,7 @@ import router from '../../../router'
 const { httpClient } = require('../../../core/application/outside/http_client_config')
 
 export default {
-  name: 'Warehouse',
+  name: 'Register_Products',
   setup() {
     const products = ref([])
     const product = ref({

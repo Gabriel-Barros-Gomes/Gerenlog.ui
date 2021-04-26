@@ -6,6 +6,7 @@ import Login from '../views/auth/Login.vue'
 import Sign from '../views/auth/Sign.vue'
 
 import registerProducts from '../views/dashboard/registers/Products.vue'
+import registerEmployees from '../views/dashboard/registers/Employees.vue'
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
     path: '/dashboard/register-products',
     name: 'Register_Products',
     component: registerProducts
+  },
+  {
+    path: '/dashboard/register-employees',
+    name: 'Register_Employees',
+    component: registerEmployees
   }
 ]
 
