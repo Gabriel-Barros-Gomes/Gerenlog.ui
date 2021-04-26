@@ -10,7 +10,6 @@
                 <label class="subtitle">Id</label> <label class="label">{{index.id}}</label>
                 <label class="subtitle">Nome</label> <label class="label">{{index.name}}</label>
                 <label class="subtitle">Quantidade</label> <label class="label">{{index.quantity}} </label>
-                <label class="subtitle">Código do Produto</label> <label class="label">{{index.product_code}}</label>
                 <label class="subtitle">Descrição</label> <label class="label">{{index.description}}</label>
                 <label class="subtitle">Tipo</label> <label class="label">{{index.type}}</label>
                 <label class="subtitle">Categoria</label> <label class="label">{{index.category}}</label>
@@ -42,13 +41,6 @@
             <label class="label">Quantidade</label>
               <div class="control">
                 <input class="input is-rounded" type="number" placeholder="Quantidade" v-model="product.quantity">
-              </div>
-          </div>
-
-          <div class="field">
-            <label class="label">Código do Produto</label>
-              <div class="control">
-                <input class="input is-rounded" type="text" placeholder="Código" v-model="product.product_code">
               </div>
           </div>
           
@@ -114,10 +106,6 @@
             <input v-else class="button is-link is-light is-rounded" type="button" value="Editar" @click.prevent="onSave">
           </div>
 
-          
-
-
-          
         </div>
     </div>
 </template>
@@ -133,7 +121,6 @@ export default {
     const product = ref({
       name:"",
       quantity:0,
-      product_code:"",
       description:"",
       type:"",
       category:"",

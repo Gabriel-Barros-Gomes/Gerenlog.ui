@@ -7,8 +7,8 @@
       </p>
       <ul class="menu-list">
         <li><router-link to="/dashboard/administration">Administração</router-link></li>
-        <li><router-link to="/dashboard/warehouse">Estoque</router-link></li>
         <li><router-link to="/dashboard/financial">Financeiro</router-link></li>
+        <li><router-link to="/dashboard/warehouse">Estoque</router-link></li>
         <li><router-link to="/dashboard/time-sheet">Folhas de Ponto</router-link></li>
         <li><router-link to="/dashboard/requests">Pedidos</router-link></li>
         <li><router-link to="/dashboard/reports">Relatórios</router-link></li>
@@ -19,6 +19,7 @@
       </p>
       <ul class="menu-list">
         <li><router-link to="/dashboard/register-employees">Cadastro de Funcionários</router-link></li>
+        <li><router-link to="/dashboard/register-products">Cadastro de Produtos</router-link></li>
       </ul>
 
       <p class="menu-label">
