@@ -183,7 +183,7 @@
                   <option value="Ativo">Ativo</option>
                   <option value="Demitido">Demitido</option>
                   <option value="Suspenso">Suspenso</option>
-                  <option value="Outros">Outros</option>
+                  <option value="Outro">Outros</option>
                 </select>
               </div>
           </div>

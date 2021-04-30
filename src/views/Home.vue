@@ -18,6 +18,7 @@
         Cadastro
       </p>
       <ul class="menu-list">
+        <li><router-link to="/dashboard/register-companies">Cadastro de Empresas</router-link></li>
         <li><router-link to="/dashboard/register-employees">Cadastro de Funcionários</router-link></li>
         <li><router-link to="/dashboard/register-products">Cadastro de Produtos</router-link></li>
       </ul>
@@ -75,6 +76,7 @@
 
 <script>
 import router from '../router'
+const { httpClient } = require('../core/application/outside/http_client_config')
 
 export default {
   name: 'Home',
@@ -83,10 +85,23 @@ export default {
     
 
   },
-  created() {
+  async created() {
     if(localStorage.getItem('token') == null || localStorage.getItem('token') == undefined){
       router.push({name:'Login'})
     }
+    try{
+      const response = await httpClient.get('/helpers/verify-token', {
+          headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}
+        })
+        if(response === null || response === undefined){
+          router.push({name:'Login'})
+        }
+        console.log(response)
+    }catch(e){
+      console.error(e, "token invalid")
+      router.push({name:'Login'})
+    }
+    
   },
   
 }
